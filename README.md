@@ -6,6 +6,15 @@ Kelas PBO 2025, pertemuan ke-13 (7 Nov)
 git clone https://github.com/leo42night/rest-api
 ```
 
+## Push Repo
+**Buat Repository di GitHub:** Tempat simpan proyek agar vercel dapat koneksi.
+```bash
+git add remote repoku https://github.com/<username>/<repo>
+git add .
+git commit -m "persiapan sebelum deploy"
+gut push repoku main --force
+```
+
 ## Config
 1. Install PHP & Database
 2. Run Database & PHP Server `php -S localhost:3001` (port dapat disesuaikan)
@@ -191,13 +200,4 @@ curl -X GET https://<url-domains>.vercel.app/
 
 curl -X GET http://<url-domains>.vercel.app/mahasiswa \
 -H "Authorization: Bearer 12345ABCDEF"
-```
-
-## Push Repo
-**Buat Repository di GitHub:** Tempat simpan proyek
-```bash
-git add remote repoku https://github.com/<username>/<repo>
-git add .
-git commit -m "persiapan sebelum deploy"
-gut push repoku main --force
 ```
