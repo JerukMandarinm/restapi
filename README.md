@@ -1,21 +1,20 @@
-# Rest API
+# Rest API Rhagil
 Kelas PBO 2025, pertemuan ke-13 (7 Nov)
 
-## Clone repo
+## 1. Clone repo
 ```bash
 git clone https://github.com/leo42night/rest-api
 ```
-
-## Push Repo
 **Buat Repository di GitHub:** Tempat simpan proyek agar vercel dapat koneksi.
 ```bash
-git add remote repoku https://github.com/<username>/<repo>
+git add remote repoku https://github.com/<username>/<repo> 
+# buat sebuah perubahan di proyek agar terdetect commit baru
 git add .
 git commit -m "persiapan sebelum deploy"
 gut push repoku main --force
 ```
 
-## Config
+## 2. Config
 1. Install PHP & Database
 2. Run Database & PHP Server `php -S localhost:3001` (port dapat disesuaikan)
 3. Jalankan `db.sql`
@@ -31,7 +30,7 @@ PUT /mahasiswa/1 (body JSON)
 DELETE /mahasiswa/1
 ```
 
-## Test API (sesuaikan path)
+## 3. Test API (sesuaikan path)
 Path bisa di http local, atau link https deployment (vercel). ganti aja url nya.
 
 ### Menggunakan Terminal (pakai terminal yang basis Unix: Git Bash)
@@ -93,11 +92,11 @@ curl -X DELETE http://localhost:3001/mahasiswa/1 \
 - Thunder Client (Ekstensi VSCode)
 - EchoAPI for VS Code (Ekstensi VSCode) **[🌟 Disarankan]**
 
-## Deployment
+## 4. Deployment
 
 ### Vercel
 Vercel bisa menjalankan PHP lewat custom runtime open-source bernama [vercel-php](https://github.com/vercel-community/php)
-### 1. **Persiapkan file konfigurasi Vecel:**
+### a. **Persiapkan file konfigurasi Vecel:**
 ```
 /api
   ├── index.php
@@ -123,16 +122,16 @@ require __DIR__ . "/../index.php";
   ]
 }
 ```
-### 2. Install Vercel CLI  
+### b. Install Vercel CLI  
 Anda perlu [install NPM](https://www.google.com/search?q=install+node+package+manager+di+windows) (Node Package Manager) lebih dulu
 ```bash
 npm install -g vercel
 ```
-### 3. Login ke akunmu (pakai Github)
+### c. Login ke akunmu (pakai Github)
 ```bash
 vercel login
 ```
-### 4. Deploy proyek
+### d. Deploy proyek
 ```bash
 vercel
 ```
@@ -152,7 +151,7 @@ Setelah selesai, kamu akan dapat URL publik `Domains` singkat seperti (lihat pad
 https://rest-api.vercel.app
 ```
 
-### 6. **Database Postgres**
+### e. **Database Postgres**
 
 Di halaman proyek vercel kalian, buka stores (contoh: **vercel.com/_nama-teams_/_nama-proyek_/stores**)
 - [Create Database]
@@ -186,18 +185,62 @@ DB_PASS: ETnWsKT1Q9xxxxx
 DB_SSLMODE: require
 ```
 
-- Jika sudah selesai setup variabel, sekarang coba deploy ulang.
+- Jika sudah selesai setup variabel DB di vercel, sekarang coba deploy ulang (tombolnya akan muncul setelah ada perubahan variabel).
 
-
-
-- (opsional) anda dapat akses database pakai HeidiSQL, ikuti config sebelumya, dan pakai config ini:
+- (opsional) anda dapat akses database Supabase (PostgreSQL) pakai HeidiSQL, ikuti config sebelumya, dan pakai config ini:
   - Network Type: **PostgreSQL (TCP/IP)**
   - Library: **libpq-12.dll**
 
-### 7. Test API link Deployment
-```bash
-curl -X GET https://<url-domains>.vercel.app/
+## 5. Test API link Deployment
 
-curl -X GET http://<url-domains>.vercel.app/mahasiswa \
+- POST (create) data mahasiswa baru.
+```bash
+curl -X POST http://<url-domain>.vercel.app/mahasiswa \
+-H "Authorization: Bearer 12345ABCDEF" \
+-H "Content-Type: application/json" \
+-d '{
+  "nama": "Andi Saputra",
+  "jurusan": "Teknik Informatika"
+}'
+```
+Respon Berhasil:
+```json
+{
+  "message": "Data mahasiswa berhasil ditambahkan"
+}
+```
+API Lainnya:
+
+- GET (ambil) Index halaman
+```bash
+curl -X GET http://<url-domain>.vercel.app/
+```
+
+- GET (ambil) semua daya mahasiswas
+```bash
+curl -X GET http://<url-domain>.vercel.app/mahasiswa \
+-H "Authorization: Bearer 12345ABCDEF"
+```
+
+- GET (ambil) mahasiswa
+```bash
+curl -X GET http://<url-domain>.vercel.app/mahasiswa/1 \
+-H "Authorization: Bearer 12345ABCDEF"
+```
+
+- PUT (update) mahasiswa data
+```bash
+curl -X PUT http://<url-domain>.vercel.app/mahasiswa/1 \
+-H "Authorization: Bearer 12345ABCDEF" \
+-H "Content-Type: application/json" \
+-d '{
+  "nama": "Ahmad Syahroni",
+  "jurusan": "Tata Boga"
+}'
+```
+
+- DELETE (hapus) mahasiswa data
+```bash
+curl -X DELETE http://<url-domain>.vercel.app/mahasiswa/1 \
 -H "Authorization: Bearer 12345ABCDEF"
 ```
